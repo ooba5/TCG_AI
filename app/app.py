@@ -22,10 +22,8 @@ class QuestionRequest(BaseModel):
 @app.post("/ask")
 async def ask_question(request: QuestionRequest):
     # Each data store should represent the rulebook of one game trained into a RAG engine.
-    if request.game == "Default":
-        selected_datastore = "projects/kinetic-calling-463721-a8/locations/us-central1/ragCorpora/4749045807062188032"
-    elif request.game == "Alt":
-        selected_datastore = "projects/812596078800/locations/us-central1/ragCorpora/7454583283205013504"
+   
+    selected_datastore = "projects/kinetic-calling-463721-a8/locations/us-central1/ragCorpora/4749045807062188032"
     response = generate(request.query, past_conversation, selected_datastore=selected_datastore)
     past_conversation.append({"role": "user", "content": request.query})
     past_conversation.append({"role": "assistant", "content": response.text})
